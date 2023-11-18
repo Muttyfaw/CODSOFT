@@ -3,23 +3,41 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT 
 const mongoose = require("mongoose")
+const bodyParser = require("body-parser")
 
 
-
-mongoose.connect(process.env.DATABASE,{
+//Database
+mongoose.connect(process.env.DATABASE, { 
     serverSelectionTimeoutMS: 5000
 })
-.then(()=>console.log("Sucessfully connected to DB"))
-
-app.route('/')
-
-.get((req, res)=>{
-    req.send ()
+.then(()=>
+console.log("Sucessfully connected to DB"
+))
+.catch(err =>{
+    Error.captureStackTrace(err)
 })
 
-app.listen(port , ()=>{
+const Jobs = new mongoose.Schema({
+    jobName: String,
+    location: String,
+    salary: String,
+})
+
+//middleware
+app.use(bodyParser.urlencoded(
+    {extended:true,
+     limit: "5mb"
+}))
+
+app.listen(port, () => {
     console.log("Server has started on port", port)
-    
+
 })
- 
- 
+
+//Routes
+app.get("/", (req, res) =>{
+    res.send ("Hello from this side")
+})
+
+
+

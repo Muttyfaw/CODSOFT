@@ -4,7 +4,10 @@ const app = express()
 const port = process.env.PORT 
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
+const cors = require("cors")
 
+//Imports
+const authRoutes = require("./routes/authRoutes")
 
 //Database
 mongoose.connect(process.env.DATABASE, { 
@@ -28,6 +31,8 @@ app.use(bodyParser.urlencoded(
     {extended:true,
      limit: "5mb"
 }))
+app.use(cors())
+
 
 app.listen(port, () => {
     console.log("Server has started on port", port)
@@ -35,9 +40,9 @@ app.listen(port, () => {
 })
 
 //Routes
-app.get("/", (req, res) =>{
-    res.send ("Hello from this side")
-})
-
+// app.get("/", (req, res) =>{
+//     res.send ("Hello from this side")
+// })
+app.use("/", authRoutes)
 
 

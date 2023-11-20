@@ -5,6 +5,8 @@ const port = process.env.PORT
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cors = require("cors")
+const cookieParser = require("cookies-parser")
+const errorHandler = require("./middlewares/error")
 
 //Imports
 const authRoutes = require("./routes/authRoutes")
@@ -20,11 +22,6 @@ console.log("Sucessfully connected to DB"
     Error.captureStackTrace(err)
 })
 
-const Jobs = new mongoose.Schema({
-    jobName: String,
-    location: String,
-    salary: String,
-})
 
 //middleware
 app.use(bodyParser.urlencoded(
@@ -32,17 +29,17 @@ app.use(bodyParser.urlencoded(
      limit: "5mb"
 }))
 app.use(cors())
+app.use(errorHandler)
 
 
 app.listen(port, () => {
     console.log("Server has started on port", port)
-
 })
 
 //Routes
 // app.get("/", (req, res) =>{
 //     res.send ("Hello from this side")
 // })
-app.use("/", authRoutes)
+app.use("/api", authRoutes)
 
 

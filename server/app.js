@@ -5,7 +5,7 @@ const port = process.env.PORT
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const cookieParser = require("cookies-parser")
+const cookieParser = require("cookie-parser")
 const errorHandler = require("./middlewares/error")
 
 //Imports
@@ -24,12 +24,14 @@ console.log("Sucessfully connected to DB"
 
 
 //middleware
+app.use(express.json())
 app.use(bodyParser.urlencoded(
     {extended:true,
      limit: "5mb"
 }))
 app.use(cors())
 app.use(errorHandler)
+app.use(cookieParser())
 
 
 app.listen(port, () => {

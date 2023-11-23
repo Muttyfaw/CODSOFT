@@ -56,11 +56,25 @@ const tokenResponse = async (user, codeStatus, res)=>{
     .json({ success: true, token, user})
 }
 
+
+//User profile
+exports.userProfile = async (req, res, next) =>{
+
+    const user = await User.findById(req.user.id).select("-password")
+
+    res.status(200).json({
+       success: true,
+       user
+    })
+}
+
+
+
 //logout
 exports.logout =(req, res, next)=>{
       res.clearCookie("token")
       res.status(200).json({
         success: true,
         message: "Sucessfully logged out"
-      })
+    })
 } 

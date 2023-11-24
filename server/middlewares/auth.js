@@ -16,10 +16,16 @@ exports.isAuthenticated = async(req, res, next)=>{
     try {
         const decoded = jwt.verify(token, jwtSecret);
         req.user = await User.findById(decoded.id);
-        next()
+        next();
 
     } catch (err) {
         return next(new ErrorResponse("Unauthorised access to this route", 401))
     }
 
+}
+
+exports.isAdmin = async(req, res, next)=>{
+    if(req.user.role === 0){
+        return next(new ErrorResponse('Access denied, you are not an admin', 401))
+    }
 }

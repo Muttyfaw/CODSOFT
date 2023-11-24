@@ -10,6 +10,7 @@ const errorHandler = require("./middlewares/error")
 
 //Imports
 const authRoutes = require("./routes/authRoutes")
+const userRoute = require("./routes/userRoute")
 
 //Database
 mongoose.connect(process.env.DATABASE, { 
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded(
     {extended:true,
      limit: "5mb"
 }))
+app.use(bodyParser.json({limit: "5mb"}))
 app.use(cors())
 app.use(errorHandler)
 app.use(cookieParser())
@@ -43,5 +45,6 @@ app.listen(port, () => {
 //     res.send ("Hello from this side")
 // })
 app.use("/api", authRoutes)
+app.use("/api", userRoute)
 
 

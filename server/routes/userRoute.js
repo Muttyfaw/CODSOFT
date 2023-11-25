@@ -1,9 +1,15 @@
 const express = require("express")
 const router = express.Router()
-const {allUsers} = require("../controllers/userController")
+const {allUsers, singleUser, editUser} = require("../controllers/userController")
 const { isAuthenticated, isAdmin } = require("../middlewares/auth")
 
-//userProfile
+//all users
 router.get("/users", isAuthenticated, isAdmin , allUsers);
+
+//single user
+router.get("/user/:id", isAuthenticated, singleUser);
+
+//edit user
+router.get("/user/edit/:id", isAuthenticated, editUser);
 
 module.exports = router;

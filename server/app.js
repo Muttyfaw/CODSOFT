@@ -1,16 +1,19 @@
 require("dotenv").config()
-const express = require('express')
-const app = express()
-const port = process.env.PORT 
-const mongoose = require("mongoose")
-const bodyParser = require("body-parser")
-const cors = require("cors")
-const cookieParser = require("cookie-parser")
-const errorHandler = require("./middlewares/error")
+const express = require('express');
+const app = express();
+const port = process.env.PORT; 
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const errorHandler = require("./middlewares/error");
+
 
 //Imports
-const authRoutes = require("./routes/authRoutes")
-const userRoute = require("./routes/userRoute")
+const authRoutes = require("./routes/authRoutes");
+const userRoute = require("./routes/userRoute");
+const jobRoutes = require("./routes/jobRoute");
+const { MongoClient } = require("mongodb");
 
 //Database
 mongoose.connect(process.env.DATABASE, { 
@@ -45,6 +48,7 @@ app.listen(port, () => {
 //     res.send ("Hello from this side")
 // })
 app.use("/api", authRoutes)
-app.use("/api", userRoute)
+app.use("/api", userRoute);
+app.use("/api", jobRoutes);
 
 

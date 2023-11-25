@@ -4,12 +4,13 @@ const ErrorResponse = require("../utils/errorResponse")
 exports.jobDetail = async (req, res, next)=>{
 
     try {
-        const job = await Job.createCollection(req.body)
+        const job = new Job(req.body)
+        job.save()
 
         if (!job) {
-            return new ErrorResponse("You need to create a job", 400)
+            return next(new ErrorResponse("You need to create a job", 400))
         }
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             job
         })
@@ -17,3 +18,20 @@ exports.jobDetail = async (req, res, next)=>{
         return next(error)
     }
 }
+
+// exports.jobList = async (req, res, next) => {
+
+//     try {
+//         const jobs = await Job.find().sort({createdAt: -1})
+
+//         if (!job) {
+//             return next(new ErrorResponse("You need to create a job", 400))
+//         }
+//         res.status(201).json({
+//             success: true,
+//             jobs
+//         })
+//     } catch (error) {
+//         return next(error)
+//     }
+// }

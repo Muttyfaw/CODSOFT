@@ -4,7 +4,7 @@ const {jobDetail, jobList} = require("../controllers/jobController");
 
 //job detail
 router.post("/jobdetails", jobDetail)
-//job detail
-router.post("/joblist", jobList)
+// //job detail
+// router.post("/joblist", jobList)
 
 module.exports = router

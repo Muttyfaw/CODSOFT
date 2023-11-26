@@ -13,6 +13,8 @@ const errorHandler = require("./middlewares/error");
 const authRoutes = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoute");
 const jobRoutes = require("./routes/jobRoute");
+const employerRoutes = require("./routes/employerRoute")
+
 const { MongoClient } = require("mongodb");
 
 //Database
@@ -50,5 +52,5 @@ app.listen(port, () => {
 app.use("/api", authRoutes)
 app.use("/api", userRoute);
 app.use("/api", jobRoutes);
-
+app.use("/api", employerRoutes);
 

@@ -14,8 +14,8 @@ const jobSchema = new mongoose.Schema({
     companyName: {
         type: ObjectId,
         ref: "Employer",
-        required: [true, "Jobname is required"],
-        trim: true
+        required: true,
+        // trim: true
     },
 
     jobType: {

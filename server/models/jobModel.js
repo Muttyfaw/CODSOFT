@@ -1,5 +1,6 @@
-const { ObjectId } = require("mongodb");
+
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 
 
@@ -11,7 +12,7 @@ const jobSchema = new mongoose.Schema({
     },
 
     companyName: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: ObjectId,
         ref: "Employer",
         required: [true, "Jobname is required"],
         trim: true

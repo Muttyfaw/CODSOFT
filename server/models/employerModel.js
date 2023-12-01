@@ -38,7 +38,7 @@ const employerSchema = new mongoose.Schema({
     },
 
     website: String
-})
+}, { timestamps: true })
 
 //encrypt password before saving
 employerSchema.pre("save", async function (next) {

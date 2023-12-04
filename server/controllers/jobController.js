@@ -7,7 +7,7 @@ exports.createJob = async (req, res, next) => {
     try {
         const job = await Job.create({
             title: req.body.title,
-            name: req.employer.id,
+            companyName: req.employer.id,
             jobType: req.body.jobType,
             description: req.body.description,
             requirement: req.body.requirement,
@@ -39,19 +39,17 @@ exports.singleJob = async (req, res, next) => {
     }
 }
 
-// exports.jobList = async (req, res, next) => {
 
-//     try {
-//         const jobs = await Job.find().sort({createdAt: -1})
+//jobslist
+exports.jobsList = async (req, res, next) => {
 
-//         if (!job) {
-//             return next(new ErrorResponse("You need to create a job", 400))
-//         }
-//         res.status(201).json({
-//             success: true,
-//             jobs
-//         })
-//     } catch (error) {
-//         return next(error)
-//     }
-// }
+    try {
+        const jobs = await Job.find()
+        res.status(201).json({
+            success: true,
+            jobs
+        })
+    } catch (error) {
+        return next(error)
+    }
+}

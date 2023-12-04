@@ -11,11 +11,10 @@ const jobSchema = new mongoose.Schema({
         maxlength: 30
     },
 
-    companyName: {
+    name: {
         type: ObjectId,
         ref: "Employer",
         required: true,
-        // trim: true
     },
 
     jobType: {

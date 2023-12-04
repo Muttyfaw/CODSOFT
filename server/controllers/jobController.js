@@ -1,12 +1,13 @@
 const Job = require("../models/jobModel");
 const ErrorResponse = require("../utils/errorResponse")
 
+
 exports.createJob = async (req, res, next) => {
 
     try {
         const job = await Job.create({
             title: req.body.title,
-            companyName: req.employer.companyName,
+            name: req.employer.id,
             jobType: req.body.jobType,
             description: req.body.description,
             requirement: req.body.requirement,

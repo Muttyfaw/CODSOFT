@@ -15,7 +15,7 @@ const userRoute = require("./routes/userRoute");
 const jobRoutes = require("./routes/jobRoute");
 const employerRoutes = require("./routes/employerRoute")
 
-const { MongoClient } = require("mongodb");
+
 
 //Database
 mongoose.connect(process.env.DATABASE, { 
@@ -24,8 +24,7 @@ mongoose.connect(process.env.DATABASE, {
 .then(()=>
 console.log("Sucessfully connected to DB"
 ))
-.catch(err =>{
-    Error.captureStackTrace(err)
+.catch(err =>{(err)
 })
 
 

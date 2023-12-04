@@ -7,7 +7,7 @@ exports.createJob = async (req, res, next) => {
     try {
         const job = await Job.create({
             title: req.body.title,
-            companyName: req.employer.id,
+            companyName: req.user.id,
             jobType: req.body.jobType,
             description: req.body.description,
             requirement: req.body.requirement,
@@ -30,7 +30,7 @@ exports.createJob = async (req, res, next) => {
 exports.singleJob = async (req, res, next) => {
     try {
         const job = await Job.findById(req.params.id);
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             job
         })
@@ -48,6 +48,20 @@ exports.jobsList = async (req, res, next) => {
         res.status(201).json({
             success: true,
             jobs
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
+//update job
+exports.updateJob = async (req, res, next) => {
+
+    try {
+        const job = await Job.findByIdAndUpdate(req.params.job_id, req.body, { new: true }).populate('user', 'firstName lastName')
+        res.status(200).json({
+            success: true,
+            job
         })
     } catch (error) {
         return next(error)

@@ -10,6 +10,6 @@ router.get("/users", isAuthenticated, isAdmin , allUsers);
 router.get("/user/:id", isAuthenticated, singleUser);
 
 //edit user
-router.get("/user/edit/:id", isAuthenticated, editUser);
+router.put("/user/edit/:id", isAuthenticated, editUser);
 
 module.exports = router;

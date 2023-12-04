@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const {isAuthenticated} = require("../middlewares/auth")
-const {jobDetail, jobList, createJob} = require("../controllers/jobController");
+const {isAuthenticated, isAdmin} = require("../middlewares/auth")
+const {jobDetail, jobList, createJob, singleJob, updateJob} = require("../controllers/jobController");
 
 
 //create job
-router.post("/createjob", isAuthenticated , createJob)
-// //job detail
-// router.post("/jobdetails", jobDetail)
+// /api/job/create
+router.post("/job/create", isAuthenticated, isAdmin, createJob)
+
+//job detail
+// /api/job/id
+router.get("/job/:id", singleJob)
+
+//update jobs 
+// /api/job/update/job_id
+router.put("/job/update/:job_id", isAuthenticated, isAdmin, updateJob)
 
 
 module.exports = router
+ 

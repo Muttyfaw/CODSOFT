@@ -5,6 +5,7 @@ const port = process.env.PORT;
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middlewares/error");
 
@@ -14,6 +15,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoute");
 const jobRoutes = require("./routes/jobRoute");
 const employerRoutes = require("./routes/employerRoute")
+
 
 
 
@@ -52,4 +54,7 @@ app.use("/api", authRoutes)
 app.use("/api", userRoute);
 app.use("/api", jobRoutes);
 app.use("/api", employerRoutes);
+
+
+app.use(errorHandler)
 

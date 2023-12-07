@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {isAuthenticated, isAdmin} = require("../middlewares/auth")
-const {jobDetail, createJob, singleJob, updateJob, allJobs} = require("../controllers/jobController");
+const { createJob, singleJob, updateJob, allJobs, deleteJob} = require("../controllers/jobController");
 
 
 //create job
@@ -19,6 +19,10 @@ router.put("/job/update/:job_id", isAuthenticated, isAdmin, updateJob)
 //show all jobs 
 // /api/jobs/show
 router.get("/jobs/alljobs", allJobs)
+
+//delete job 
+// /api/job/delete/job_id
+router.delete("/admin/job/delete/:job_id", isAuthenticated, isAdmin, deleteJob)
 
 
 module.exports = router

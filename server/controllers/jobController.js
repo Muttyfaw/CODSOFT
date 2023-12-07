@@ -83,11 +83,12 @@ exports.allJobs = async (req, res, next) => {
     let jobTypes = [];
     const jobTypeCategory = await Job.find({}, {jobType: 1})
     jobTypeCategory.forEach(cat =>{
-        jobTypes.push(cat._id)
+        jobTypes.push(cat.jobType)
     })
     
+    let setUniqueJobType = [...new Set (jobTypes)]
     let cat = req.query.cat
-    let categ = cat !== '' ? cat : jobTypes
+    let categFilter = cat !== '' ? cat : setUniqueJobType
 
     //filter by location
     let locations = []
@@ -104,7 +105,7 @@ exports.allJobs = async (req, res, next) => {
     const pageLength = 5;
     const page = Number(req.query.pageNumber) || 1
     // const count = await Job.find({}).estimatedDocumentCount()
-    const count = await Job.find({...keyword, location: locationFilter, jobType: categ}).countDocuments()
+    const count = await Job.find({...keyword, location: locationFilter, jobType: categFilter}).countDocuments()
     
    
     try {
@@ -115,12 +116,27 @@ exports.allJobs = async (req, res, next) => {
             page,
             pages: Math.ceil(count / pageLength),
             count,
-            setUniqueLocation
-            // jobTypeCategory
+            setUniqueLocation,
+            setUniqueJobType
         })
         next()
     }
     catch (error) {
         return next(error)
+    }
+}
+
+//delete job
+exports.deleteJob = async (req, res, next) => {
+    try {
+        const job = await Job.findByIdAndRemove(req.params.id);
+        res.status(200).json({
+            success: true,
+            message: "Job deleted"
+        })
+        next();
+
+    } catch (error) {
+        return next(error);
     }
 }

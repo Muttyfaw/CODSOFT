@@ -129,10 +129,10 @@ exports.allJobs = async (req, res, next) => {
 //delete job
 exports.deleteJob = async (req, res, next) => {
     try {
-        const job = await Job.findByIdAndRemove(req.params.id);
+        const job = await Job.findOneAndDelete(req.params.id);
         res.status(200).json({
             success: true,
-            message: "Job deleted"
+            message: "Job deleted successfully"
         })
         next();
 

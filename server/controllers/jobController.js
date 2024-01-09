@@ -134,9 +134,8 @@ exports.deleteJob = async (req, res, next) => {
             success: true,
             message: "Job deleted successfully"
         })
-        next();
 
     } catch (error) {
-        return next(error);
+        next(new ErrorResponse("Server Error", 500))
     }
 }

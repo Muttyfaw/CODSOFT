@@ -80,15 +80,19 @@ exports.allJobs = async (req, res, next) => {
 
 
     //filter by category ids
-    let jobTypes = [];
-    const jobTypeCategory = await Job.find({}, {jobType: 1})
-    jobTypeCategory.forEach(cat =>{
-        jobTypes.push(cat.jobType)
+    let categories = []
+    const jobTypeCategory = await Job.find({jobType})
+    jobTypeCategory.forEach(cat => {
+        categories.push(cat.jobType)
     })
+
+    // let jobType = [...new Set (jobTypes)]
+    let cat = req.query.cat;
+    let categFilter = cat !== '' ? cat : categories
+
+  
+    // let cat = req.query.cat
     
-    let setUniqueJobType = [...new Set (jobTypes)]
-    let cat = req.query.cat
-    let categFilter = cat !== '' ? cat : setUniqueJobType
 
     //filter by location
     let locations = []
@@ -101,7 +105,7 @@ exports.allJobs = async (req, res, next) => {
     let location = req.query.location
     let locationFilter = location !== '' ? location : setUniqueLocation
 
-    //set page division
+    //set pagination
     const pageLength = 5;
     const page = Number(req.query.pageNumber) || 1
     // const count = await Job.find({}).estimatedDocumentCount()
@@ -109,15 +113,17 @@ exports.allJobs = async (req, res, next) => {
     
    
     try {
-        const jobs = await Job.find({ ...keyword }).skip(pageLength * (page - 1)).limit(pageLength)
+        const jobs = await Job.find({ ...keyword, jobType: categFilter, location: locationFilter }).skip(pageLength * (page - 1)).limit(pageLength)
+        console.log(jobs)
         res.status(200).json({
             success: true,
             jobs,
             page,
             pages: Math.ceil(count / pageLength),
             count,
+            cat,
             setUniqueLocation,
-            setUniqueJobType
+            // setUniqueJobType
         })
         next()
     }
